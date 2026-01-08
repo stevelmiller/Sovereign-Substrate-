@@ -169,7 +169,7 @@ class TestPromptLengthValidation:
                                    'X-Sovereign-Key': 'demo-key'
                                })
         # Should return 200 (though might be intercepted for other reasons)
-        assert response.status_code in [200]
+        assert response.status_code == 200
         
         data = response.get_json()
         # Should not be blocked for length

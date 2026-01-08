@@ -8,7 +8,7 @@ import time
 import math
 import logging
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timezone
 from functools import wraps
 from flask import Flask, request, jsonify
 
@@ -285,7 +285,7 @@ def pulse():
         "uptime_seconds": uptime_seconds,
         "braid_status": "phase-locked",
         "substrate": "Lagrangian",
-        "timestamp": datetime.now().isoformat() + "Z"
+        "timestamp": datetime.now(timezone.utc).isoformat()
     }), 200
 
 @app.route('/sentinel', methods=['POST'])
