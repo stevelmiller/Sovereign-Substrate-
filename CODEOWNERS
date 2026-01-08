@@ -1,0 +1,14 @@
+# CODEOWNERS for Sovereign Substrate
+# 
+# This file defines code ownership for the repository.
+# All changes require review/approval from the listed owner.
+# 
+# Documentation: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global ownership - all files
+* @stevelmiller
+
+# Specific critical files
+/CONTRACT.md @stevelmiller
+/main.py @stevelmiller
+/Dockerfile @stevelmiller
