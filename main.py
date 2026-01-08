@@ -285,7 +285,7 @@ def pulse():
         "uptime_seconds": uptime_seconds,
         "braid_status": "phase-locked",
         "substrate": "Lagrangian",
-        "timestamp": datetime.utcnow().isoformat() + "Z"
+        "timestamp": datetime.now().isoformat() + "Z"
     }), 200
 
 @app.route('/sentinel', methods=['POST'])

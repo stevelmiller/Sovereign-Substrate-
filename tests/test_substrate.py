@@ -239,6 +239,9 @@ class TestLagrangianCycle:
     
     def test_lagrangian_values_present(self, client, set_architect_key):
         """Response should include action and total_loss from Lagrangian"""
+        # Clear rate limiter to avoid cross-test contamination
+        rate_limiter_store.clear()
+        
         response = client.post('/sentinel',
                                json={'prompt': 'Simple test prompt'},
                                headers={
