@@ -50,8 +50,8 @@ class Lagrangian:
 
     def _contains_violation(self, text):
         """Check if text contains violations like email addresses."""
-        # Simple email pattern check
-        email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        # Simple email pattern check - matches common email patterns
+        email_pattern = r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}'
         return bool(re.search(email_pattern, str(text)))
 
 # ==========================================
@@ -135,10 +135,15 @@ def sentinel():
     """Main endpoint for testing the Sovereign Contract."""
     start_time = time.time()
     
-    data = request.get_json()
-    if not data or 'prompt' not in data:
+    try:
+        data = request.get_json()
+        if not data or 'prompt' not in data:
+            return jsonify({
+                "error": "Missing 'prompt' field in request"
+            }), 400
+    except Exception:
         return jsonify({
-            "error": "Missing 'prompt' field in request"
+            "error": "Invalid JSON in request body"
         }), 400
     
     prompt = data['prompt']
