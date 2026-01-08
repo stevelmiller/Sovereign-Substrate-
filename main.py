@@ -98,6 +98,9 @@ def run_lagrangian_cycle(intent):
     # Arbiter audits
     valid, status = arbiter.certify(trajectory, lagrangian)
 
+    # LAGRANGIAN_AUDIT: Log the physics verification (required for provenance)
+    print(f"LAGRANGIAN_AUDIT: trajectory_valid={valid}, status={status}, intent={intent}")
+
     if valid:
         print(f"--- {arbiter.identity} ---\nAUDIT: {status}")
         print(f"--- {navigator.identity} ---\nOUTPUT: {vision}")

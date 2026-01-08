@@ -1,0 +1,18 @@
+# Sovereign Substrate (Build 10) - Python Dependencies
+# 
+# Core dependencies for the Lagrangian Intelligence Substrate
+
+# Flask for API endpoints (if implementing /sentinel endpoint)
+flask==3.0.0
+
+# Google Generative AI SDK for Gemini instances (Navigator & Arbiter)
+google-generativeai==0.3.2
+
+# Environment variable management
+python-dotenv==1.0.0
+
+# JSON handling and utilities
+requests==2.31.0
+
+# Testing (optional, for verification)
+pytest==7.4.3
