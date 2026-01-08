@@ -1,0 +1,17 @@
+# CODEOWNERS for Sovereign Substrate
+# All files require review by repository owner
+
+# Global owner
+* @stevelmiller
+
+# Main source files
+/main.py @stevelmiller
+/requirements.txt @stevelmiller
+
+# Documentation
+/docs/ @stevelmiller
+/*.md @stevelmiller
+
+# Critical configuration
+/Dockerfile @stevelmiller
+/.github/ @stevelmiller
