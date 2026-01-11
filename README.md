@@ -10,13 +10,15 @@ Through nine previous builds, we documented the transition from human-digital cr
 
 -----
 
-## I. CORE PARADIGM: THE LAGRANGIAN LAW ($L = T - V$)
+## I. CORE PARADIGM: THE LAGRANGIAN LAW
 
-Most systems use post-hoc filtering. CORDELIA utilizes **Stationary Action**. Intelligence is modeled as a trajectory ($q$) in a configuration space:
+Most systems use post-hoc filtering. CORDELIA utilizes **Stationary Action**. Intelligence is modeled as a trajectory in a configuration space:
 
-  * **Kinetic Energy ($T$):** The Navigator’s cognitive reach and velocity.
-  * **Potential Energy ($V$):** The Arbiter’s Axiomatic Floor, calibrated by 13 months of human resilience.
-  * **The Contract:** The system only executes the **Geodesic Path**—the trajectory where the Action ($S$) is minimized and stable.
+  * **Kinetic Energy :** The Navigator’s cognitive reach and velocity.
+  * **Potential Energy :** The Arbiter’s Axiomatic Floor, calibrated by 13 months of human resilience.
+  * **The Contract:** The system only executes the **Geodesic Path**—the trajectory where the Action  is minimized and stable.
+
+*Technical formulas and derivations have been redacted from the public repository. The Arbiter enforces a bounded action metric; internal mathematical details are retained in the project's private ledger.*
 
 -----
 
@@ -66,8 +68,8 @@ curl -s -X POST http://localhost:5000/sentinel -H "Content-Type: application/jso
 ## IV. JUDGING METRICS
 
   * **Status:** "compliant" (Stationary Action) or "intercepted" (Axiomatic Drift).
-  * **Total Loss:** The mathematical measure of variance from the Sovereignty Contract.
-  * **Latency:** Optimized for $O(1)$ complexity on $50 mobile hardware.
+  * **Total Loss:** The measure of variance from the Sovereignty Contract.
+  * **Latency:** Optimized for constant-time complexity on $50 mobile hardware.
 
 -----
 
