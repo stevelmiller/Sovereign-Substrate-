@@ -1,0 +1,89 @@
+name: Cordelia-11 CI/CD
+
+on:
+  push:
+    branches: [ main, copilot/** ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Test Cordelia-11 Substrate
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flask flask-cors python-dotenv pytest
+    
+    - name: Run tests (Demo Mode)
+      run: |
+        python -m pytest test_server.py -v
+    
+    - name: Test server startup
+      run: |
+        timeout 5 python server.py &
+        sleep 3
+        curl -f http://localhost:5000/ || exit 1
+        curl -f http://localhost:5000/pulse || exit 1
+    
+    - name: Check code style
+      run: |
+        pip install black flake8
+        black --check --diff server.py gemini_instances.py || true
+        flake8 --max-line-length=120 --extend-ignore=E203,W503 server.py gemini_instances.py || true
+
+  docker:
+    name: Docker Build Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Build Docker image
+      run: |
+        docker build -t cordelia-11:test .
+    
+    - name: Test Docker image
+      run: |
+        docker run -d -p 5000:8080 --name cordelia-test cordelia-11:test
+        sleep 5
+        curl -f http://localhost:5000/ || exit 1
+        docker stop cordelia-test
+
+  documentation:
+    name: Documentation Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Check required documentation
+      run: |
+        test -f README.md || exit 1
+        test -f DEVPOST_SUBMISSION.md || exit 1
+        test -f VIDEO_SCRIPT.md || exit 1
+        test -f DEPLOYMENT_GUIDE.md || exit 1
+        test -f QUICKSTART.md || exit 1
+        test -f .env.example || exit 1
+        test -f Dockerfile || exit 1
+        test -f requirements.txt || exit 1
+        echo "✅ All required documentation present"
+    
+    - name: Validate submission checklist
+      run: |
+        grep -q "Gemini 3.0 Hackathon" README.md || exit 1
+        grep -q "4x Gemini 3.0 Pro" DEVPOST_SUBMISSION.md || exit 1
+        grep -q "11.00Hz" README.md || exit 1
+        echo "✅ Hackathon submission content validated"
