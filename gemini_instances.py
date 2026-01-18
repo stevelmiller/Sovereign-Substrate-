@@ -232,10 +232,16 @@ Be concise and focus on orchestration, not content generation."""
         """Get status of all instances"""
         uptime = time.time() - self.start_time
         
+        # Check if any instances exist and are ready
+        has_ready_instances = any(
+            instance and instance.ready 
+            for instance in self.instances.values()
+        )
+        
         return {
-            "status": "synchronized" if self.is_ready() else "initializing",
+            "status": "synchronized" if has_ready_instances else "initializing",
             "resonance_hz": self.resonance_hz,
-            "braid_state": "phase_locked" if self.is_ready() else "unstable",
+            "braid_state": "phase_locked" if has_ready_instances else "unstable",
             "instances": {
                 "navigator": "ready" if self.instances.get(InstanceRole.NAVIGATOR, None) and self.instances[InstanceRole.NAVIGATOR].ready else "offline",
                 "arbiter": "monitoring" if self.instances.get(InstanceRole.ARBITER, None) and self.instances[InstanceRole.ARBITER].ready else "offline",

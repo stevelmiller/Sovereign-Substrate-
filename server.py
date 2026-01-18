@@ -26,6 +26,12 @@ CORS(app)
 # Initialize the 4x Gemini manifold
 manifold = None
 
+def init_manifold():
+    """Initialize manifold at startup"""
+    global manifold
+    if GEMINI_AVAILABLE:
+        manifold = get_manifold()
+
 @app.before_request
 def ensure_manifold():
     """Ensure manifold is initialized before handling requests"""
@@ -61,7 +67,7 @@ def pulse():
     Health check endpoint
     Returns resonance status and braid synchronization state
     """
-    if not GEMINI_AVAILABLE or manifold is None:
+    if not GEMINI_AVAILABLE:
         return jsonify({
             "status": "demo_mode",
             "message": "Gemini API not configured - using mock responses",
@@ -72,7 +78,25 @@ def pulse():
                 "arbiter": "simulated",
                 "ard": "simulated",
                 "cognitive_intellect": "simulated"
-            }
+            },
+            "build": 11,
+            "note": "To enable full functionality, install google-generativeai and set GOOGLE_API_KEY in .env"
+        })
+    
+    if manifold is None:
+        return jsonify({
+            "status": "demo_mode",
+            "message": "Gemini API key not configured - using mock responses",
+            "resonance_hz": 11.00,
+            "braid_state": "simulated",
+            "instances": {
+                "navigator": "simulated",
+                "arbiter": "simulated",
+                "ard": "simulated",
+                "cognitive_intellect": "simulated"
+            },
+            "build": 11,
+            "note": "Set GOOGLE_API_KEY in .env to enable full functionality"
         })
     
     try:
@@ -134,7 +158,11 @@ def sentinel():
         }), 400
     
     # Demo mode responses if Gemini not available
-    if not GEMINI_AVAILABLE or manifold is None:
+    if not GEMINI_AVAILABLE:
+        return handle_sentinel_demo_mode(prompt)
+    
+    # If manifold not ready, also use demo mode
+    if manifold is None or not manifold.is_ready():
         return handle_sentinel_demo_mode(prompt)
     
     try:
@@ -258,6 +286,11 @@ def initialize_system():
 
 if __name__ == '__main__':
     initialize_system()
+    
+    # Try to initialize manifold at startup
+    if GEMINI_AVAILABLE:
+        print("Initializing manifold...")
+        init_manifold()
     
     port = int(os.getenv('PORT', 5000))
     host = os.getenv('HOST', '0.0.0.0')
