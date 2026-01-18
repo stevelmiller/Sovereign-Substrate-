@@ -378,14 +378,26 @@ gcloud run deploy cordelia-11 --source . --region us-central1
 
 ## 🔐 Security Summary
 
-**Vulnerabilities Found:** 0  
+**Vulnerabilities Found:** 0 ✅  
 **Code Review Issues:** 1 (fixed)  
-**Security Best Practices:** Implemented
+**Security Best Practices:** Implemented  
+**Dependency Vulnerabilities:** 5 found, all patched ✅
+
+**Security Fixes Applied:**
+- ✅ Updated aiohttp from 3.9.1 to 3.13.3 (fixes 3 CVEs)
+  - Zip bomb vulnerability
+  - DoS vulnerability
+  - Directory traversal vulnerability
+- ✅ Updated gunicorn from 21.2.0 to 22.0.0 (fixes 2 CVEs)
+  - HTTP request smuggling vulnerabilities
+
+**Security Measures:**
 - Input validation ✅
 - Environment variable configuration ✅
 - No hardcoded secrets ✅
 - Workflow permissions restricted ✅
 - Error handling present ✅
+- All dependencies patched to secure versions ✅
 
 ---
 
